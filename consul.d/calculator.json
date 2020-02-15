@@ -1,6 +1,15 @@
-{"service":
-  {"name": "calculator",
-   "tags": ["python"],
-   "port": 50051
+{
+  "service": {
+    "name": "calculator",
+    "tags": [
+      "python"
+    ],
+    "port": 50051,
+    "check": {
+      "name": "gRPC health check",
+      "grpc": "127.0.0.1:50051",
+      "grpc_use_tls": false,
+      "interval": "5s"
+    }
   }
 }
