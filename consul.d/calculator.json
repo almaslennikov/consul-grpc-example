@@ -1,0 +1,6 @@
+{"service":
+  {"name": "calculator",
+   "tags": ["python"],
+   "port": 50051
+  }
+}
