@@ -1,32 +1,53 @@
 import logging
-import math
-from concurrent import futures
 import sys
+import uuid
+from concurrent import futures
 
 import grpc
-
-import example_pb2
-import example_pb2_grpc
-
 from grpc_health.v1 import health
 from grpc_health.v1 import health_pb2
 from grpc_health.v1 import health_pb2_grpc
 
+import todolist_pb2
+import todolist_pb2_grpc
+
 port = 50051
 health_check_servicer = None
 
-class CalculatorServices(example_pb2_grpc.CalculatorServicer):
-    def __init__(self):
-        pass
 
-    def CalculatePower(self, request, context):
-        value = request.num1.value
-        power = request.num2.value
-        result = math.pow(value, power)
-        logging.info('Calculate {}^{}: {}'.format(value, power, result))
-        return example_pb2.Number(value=result)
+class TodoListServicer(todolist_pb2_grpc.TodoListServicer):
+    def __init__(self):
+        self.items = []
+
+    def AddItem(self, request, context):
+        name = request.name
+        id = str(uuid.uuid4())
+
+        logging.info('Add item ({}, {})'.format(name, id))
+
+        self.items.append({
+            'name': name,
+            'id': id
+        })
+
+        return todolist_pb2.Id(id=id)
+
+    def GetItems(self, request, context):
+        logging.info('Get items: {}'.format(self.items))
+
+        return todolist_pb2.Items(items=map(lambda item: todolist_pb2.Item(name=todolist_pb2.Name(name=item['name']),
+                                                                           id=todolist_pb2.Id(id=item['id'])),
+                                            self.items))
+
+    def RemoveItem(self, request, context):
+        logging.info('Remove item ({})'.format(request.id))
+
+        self.items = list(filter(lambda item: item['id'] != request.id, self.items))
+        return todolist_pb2.Stub()
+
 
 HealthCheckStatus = health_pb2.HealthCheckResponse
+
 
 def set_health_check_status(status):
     health_check_servicer.set('', status)
@@ -35,8 +56,8 @@ def set_health_check_status(status):
 def serve():
     logging.info('Starting configuration...')
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
-    example_pb2_grpc.add_CalculatorServicer_to_server(
-        CalculatorServices(), server)
+    todolist_pb2_grpc.add_TodoListServicer_to_server(
+        TodoListServicer(), server)
 
     set_health_check_status(HealthCheckStatus.UNKNOWN)
     health_pb2_grpc.add_HealthServicer_to_server(health_check_servicer, server)

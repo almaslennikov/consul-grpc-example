@@ -1,6 +1,6 @@
 {
   "service": {
-    "name": "calculator",
+    "name": "todolist",
     "tags": [
       "python"
     ],

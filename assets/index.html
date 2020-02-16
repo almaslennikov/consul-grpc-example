@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hello!</title>
+</head>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<body>
+<div id="app">
+    <h2>To-do list</h2>
+    <ul>
+        <li v-for="item in items">
+            <span>{{item.name}}</span>
+            <button v-on:click="removeItem(item)">Mark done</button>
+        </li>
+    </ul>
+    <input type="text" v-model="itemToAdd"/>
+    <button v-on:click="addItem()">Add item</button>
+</div>
+<script type="text/javascript">
+    let vm = new Vue({
+        el: '#app',
+        data: {
+            itemToAdd: '',
+            items: []
+        },
+        methods: {
+            addItem: async function () {
+                let response = await fetch(`/api/items`, {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({name: this.itemToAdd})
+                });
+                if (response.ok) {
+                    this.fetchItems();
+                }
+            },
+            fetchItems: async function() {
+                let response = await fetch(`/api/items`, {
+                    method: 'GET'
+                });
+                if (response.ok) {
+                    let json = await response.json();
+                    this.items = json.items;
+                }
+            },
+            removeItem: async function (itemToRemove) {
+                let response = await fetch(`/api/items/${itemToRemove.id}`, {
+                    method: 'DELETE'
+                });
+                if (response.ok) {
+                    this.fetchItems();
+                }
+            }
+        }
+    });
+</script>
+</body>
+</html>

@@ -16,7 +16,11 @@ This is an example of two python microservices communicating with each other usi
 
 # Setup
 
-1. Compile protobuf services definitions: `python -m grpc_tools.protoc --python_out=. --grpc_python_out=. example.proto`
-2. Run calculator service: `python calculator_server.py`
-3. Run Consul binary: `consul agent -dev -enable-script-checks -config-dir=./consul.d`
-4. Run calculator client: `python calculator_client.py`
+1. Compile protobuf services definitions: `python -m grpc_tools.protoc --python_out=. --grpc_python_out=. todolist.proto`
+2. Run Consul binary: `consul agent -dev -enable-script-checks -config-dir=./consul.d`
+3. Run calculator service: `python todolist_service.py`
+4. Run calculator client: `python web_server.py [--resolver {dns,http,grpc-dns}]`
+
+# Usage
+
+Access `http://localhost:50052 from your browser and have fun!`

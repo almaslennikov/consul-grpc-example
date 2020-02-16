@@ -1,0 +1,18 @@
+{
+  "service": {
+    "name": "web",
+    "tags": [
+      "python",
+      "flask"
+    ],
+    "port": 50052,
+    "check": {
+      "name": "HTTP API on port 50052",
+      "http": "http://localhost:50052/test",
+      "tls_skip_verify": false,
+      "method": "GET",
+      "interval": "10s",
+      "timeout": "1s"
+    }
+  }
+}

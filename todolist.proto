@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+service TodoList {
+    rpc AddItem(Name) returns (Id) {}
+    rpc GetItems(Stub) returns (Items) {}
+    rpc RemoveItem(Id) returns (Stub) {}
+}
+
+message Name {
+    string name = 1;
+}
+
+message Id {
+    string id = 1;
+}
+
+message Item {
+    Name name = 1;
+    Id id = 2;
+}
+
+message Items {
+    repeated Item items = 1;
+}
+
+message Stub {
+
+}
