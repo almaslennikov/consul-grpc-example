@@ -1,6 +1,6 @@
 # Summary
 
-This is an example of two python microservices communicating with each other using Consul.
+This is an example of two python microservices communicating with each other via gRPC using Consul as service registry.
 
 ## Features
 
