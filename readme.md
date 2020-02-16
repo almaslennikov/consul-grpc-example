@@ -23,4 +23,5 @@ This is an example of two python microservices communicating with each other usi
 
 # Usage
 
-Access `http://localhost:50052 from your browser and have fun!`
+Access `http://localhost:50052` from your browser and have fun!
+Monitor services from Consul UI running at`http://localhost:8500`
