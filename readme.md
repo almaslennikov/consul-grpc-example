@@ -16,7 +16,7 @@ This is an example of two python microservices communicating with each other usi
 
 # Setup
 
-1. Compile protobuf services definitions: python -m grpc_tools.protoc --python_out=. --grpc_python_out=. example.proto
-2. Run calculator service: python calculator_server.py
+1. Compile protobuf services definitions: `python -m grpc_tools.protoc --python_out=. --grpc_python_out=. example.proto`
+2. Run calculator service: `python calculator_server.py`
 3. Run Consul binary
-4. Run calculator client: python calculator_client.py
+4. Run calculator client: `python calculator_client.py`
