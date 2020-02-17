@@ -11,7 +11,7 @@ This is an example of two python microservices communicating with each other via
 ## Prerequisites
 
 * Python 2.7+ or 3.4+
-* Python packages: `grpcio`, `grpcio-tools`, `dnspython`, `requests`, `grpc-health-checking`, `flask`
+* Python packages: `grpcio`, `grpcio-tools`, `dnspython`, `requests`, `grpcio-health-checking`, `flask`
 * Consul binary (https://www.consul.io/downloads.html)
 
 ## Setup
